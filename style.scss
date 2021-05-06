@@ -1,0 +1,221 @@
+// $color-blue: blue;
+// $bg-color: #f1f1f1;
+// section {
+//   background-color: $bg-color;
+//   h2 {
+//     color: $color-blue;
+//   }
+// }
+
+// // Kế thừa (extend)
+// .box {
+//   background-color: #f1f1f1;
+//   border: 1px solid #ccc;
+// }
+// .section {
+//   @extend .box;
+//   padding: 20px;
+// }
+
+// section.content .info {
+//   font-size: 0.8em;
+// }
+// .content nav.sidebar {
+//     @extend .info;
+//     padding: 30px;
+// }
+
+// // @mixin, @include
+// @mixin reset-list {
+//   margin: 0;
+//   padding: 0;
+//   list-style: none;
+// }
+// ul {
+//     @include reset-list;
+//     background-color: #f1f1f1;
+//     li {
+//         padding: 10px;
+//         border: 1px solid #ccc;
+//     }
+// }
+
+// @mixin center($prop, $val) {
+//   margin: 0 auto;
+//   width: 300px;
+//   #{$prop}: $val;
+// }
+// @mixin propMixi($prop,$val) {
+//   -webkit-#{$prop}: $val;
+//      -moz-#{$prop}: $val;
+//       -ms-#{$prop}: $val;
+//           #{$prop}: $val;
+// }
+// .main {
+//   @include center(color,red);
+//   @include propMixi(box-shadow,3px 3px 2px blue);
+//   padding: 20px;
+// }
+// .box2 {
+//   @include propMixi(transform,rotate(90deg));
+//   background-color: #f1f1f1;
+// }
+
+// // Placeholder
+// %reset-list {
+//   margin: 0;
+//   padding: 0;
+//   background: none;
+// }
+
+// ul {
+//     @extend %reset-list;
+//     background-color: #f1f1f1;
+//     li {
+//         padding: 10px;
+//         border: 1px solid #ccc;
+//     }
+// }
+// div {
+//     @extend %reset-list;
+// }
+
+// Function
+// SCSS @function, khá giống nhau với @mixin, tuy nhiên thay vì biên dịch CSS style như @mixin, thì @function sẽ trả về giá trị, thuộc tính, hoặc function hoặc thậm chí là một @mixin.
+// @function getWidth($widthWarp, $item) {
+//   @return $widthWarp / $item;
+// }
+// .list {
+//   width: 600px;
+//   li {
+//       float: left;
+//       width: getWidth(600px,4);
+//   }
+// }
+// @function getWidth2($item) {
+//   @return 100% / $item;
+// }
+// .two-cols {
+//   width: getWidth2(2);
+// }
+// .three-cols {
+//   width: getWidth2(3);
+// }
+// .four-cols {
+//   width: getWidth2(4);
+// }
+// .five-cols {
+//   width: getWidth2(5);
+// }
+
+// // @if @else
+// @mixin position($pos,$y,$x) {
+//   position: absolute;
+//   @if $pos == 'tl' {
+//       left: $x;
+//       top: $y;
+//   }@else if $pos == 'tr' {
+//       right: $x;
+//       top: $y;
+//   }@else if $pos == 'bl' {
+//       left: $x;
+//       bottom: $y;
+//   }@else if $pos == 'br' {
+//       right: $x;
+//       bottom: $y;
+//   }
+// }
+// @mixin bdr-position($pos,$radius) {
+//   border-radius: 0;
+//   @if $pos == 'top' {
+//     border-#{$pos}-left-radius: $radius;
+//     border-#{$pos}-right-radius: $radius;
+//   }@else if $pos == 'bottom' {
+//     border-#{$pos}-left-radius: $radius;
+//     border-#{$pos}-right-radius: $radius;
+//   }@else if $pos == 'right' {
+//     border-bottom-#{$pos}-radius: $radius;
+//     border-top-#{$pos}-radius: $radius;
+//   }@else if $pos == 'left' {
+//     border-bottom-#{$pos}-radius: $radius;
+//     border-top-#{$pos}-radius: $radius;
+//   }
+// }
+// #main {
+//   position: relative;
+//   @include bdr-position(top,4px);
+//   .box01 {
+//       @include position('tl',20px,40px)
+//   }
+//   .box02 {
+//       @include position('bl',50px,30px)
+//   }
+// }
+
+// // @for
+// $lenght: 5;
+// @for $i from 1 through $lenght {
+//     .item-#{$i} {
+//         opacity: 1/$i;
+//     }
+// }
+
+// $total-cols: 8;
+// @function column-width($col) {
+//     @return percentage($col/$total-cols);
+// }
+// @for $i from 1 through $total-cols {
+//     .col-#{$i} { width: column-width($i) };
+// }
+
+// $base-color: #036;
+// @for $i from 1 through 3 {
+//     ul:nth-child(3n + #{$i}) {
+//          background-color: lighten($base-color, $i * 5%);
+//     }
+// }
+
+// // @while
+// $i: 4;
+// @while $i > 0 {
+//     .item-#{$i} {
+//         width: 800px/$i;
+//         $i: $i - 1;
+//     }
+// }
+
+// $i: 3;
+// @while $i < 5 {
+//     .item-#{$i} {
+//         color: red;
+//         $i : $i + 1;
+//     }
+// }
+
+// @each
+// $sizes: 40px, 50px, 80px;
+// @each $size in $sizes {
+//   .icon-#{$size} {
+//     font-size: $size;
+//     height: $size;
+//     width: $size;
+//   }
+// }
+
+// $val: (normal, bold, 10px), (emphasis, bold, 15px);
+// @each $name, $style, $size in $val {
+//   .#{$name} {
+//       font-weight: $style;
+//       font-size: $size;
+//    }
+// }
+
+// $val: (default: normal,  emphasis: bold);
+// @each $name, $style in $val {
+//    .#{$name} {
+//       font-weight: $style;
+//   }
+// }
+
+// @import
+@import 'base', './reset'
